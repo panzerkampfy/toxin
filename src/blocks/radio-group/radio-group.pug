@@ -1,0 +1,10 @@
+include ../radio-button/radio-button
+
+mixin radio-group(options)
+  - var {name, title, radioButtons} = options
+
+  fieldset.radio-group
+    ul.radio-group__list
+      for buttonOptions in radioButtons
+        li.radio-group__item
+          +radio-button({name, buttonOptions})

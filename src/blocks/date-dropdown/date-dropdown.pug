@@ -1,0 +1,15 @@
+mixin date-dropdown(options)
+  - var {firstLabel= "Прибытие", secondLabel= "Выезд"} = options
+  -
+    var inputsData = [
+      {label: firstLabel, value: startDateString}, 
+      {label: secondLabel, value: endDateString}
+    ]
+
+  .date-dropdown.js-date-dropdown
+    for inputDataItem, index in inputsData
+      .date-dropdown__item(class= (index === inputsData.length - 1) ? "" : "date-dropdown__item--gap-m")
+        label.date-dropdown__wrapper
+          .date-dropdown__label= inputDataItem.label
+          .date-dropdown__input-wrapper
+            input.date-dropdown__input.date-dropdown__input--with-icon(value=inputDataItem.value placeholder="ДД.ММ.ГГГГ" name="arrival" required)

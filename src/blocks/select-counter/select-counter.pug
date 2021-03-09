@@ -1,0 +1,32 @@
+include ../input/input
+include ../simple-button/simple-button
+
+
+mixin numberWithSpaces(num) 
+  != num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "&nbsp;")
+
+mixin declOfNum(n, titles)
+  = titles[n % 10 === 1 && n % 100 !== 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2]
+
+mixin select-counter(options)
+  - var {items = [], label = "", name = "", required = false, placeholder = "", type = "", inline = false} = options
+
+  -
+    var selectClass = "select-counter js-select-counter"
+    var itemsClass = "select-counter__items"
+  if inline
+    -
+      selectClass += " select-counter--expanded"
+      itemsClass += " select-counter__items--inline"
+
+  div(class= selectClass)
+    +input({label, type}, {icon: "expand_more", type: "button"})(placeholder=placeholder name=name required=required value=countString || "Сколько гостей")
+    div(class= itemsClass)
+      ul.select-counter__items-list
+        for item, index in items
+          li.select-counter__item(data-countword= item.countWord || "" data-index= index)
+            span.select-counter__item-word= item.title
+            .select-counter__item-controls
+              button.select-counter__item-button(type="button") -
+              span.select-counter__item-count= item.count
+              button.select-counter__item-button(type="button") +
